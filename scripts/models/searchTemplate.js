@@ -1,23 +1,16 @@
-import {
-	displayRecipes,
-	updateRecipeCount,
-} from "../components/recipeTemplate";
+/// Template search, squellet de recherche
 export class SearchTemplate {
-	constructor(recipes) {
-		this.recipes = recipes;
+	constructor(filteredRecipes) {
+		this.recipes = filteredRecipes;
 	}
 	search(query) {
-		throw new Error("Method 'search' must be implemented");
-	}
-	displayRecipes(recipes) {
-		displayRecipes(recipes);
-		updateRecipeCount(recipes.length);
+		return this.filterRecipes(query);
 	}
 }
-
+// recherche principale
 export class FilterByName extends SearchTemplate {
-	search(query) {
-		const filteredRecipes = this.recipes.filter(
+	filterRecipes(query) {
+		const result = this.recipes.filter(
 			(recipe) =>
 				recipe.name.toLowerCase().includes(query.toLowerCase()) ||
 				recipe.description.toLowerCase().includes(query.toLowerCase()) ||
@@ -25,40 +18,47 @@ export class FilterByName extends SearchTemplate {
 					ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
 				)
 		);
-		this.displayRecipes(filteredRecipes);
-		return filteredRecipes;
+		return result;
 	}
 }
+
+//recherche par ingrédient
 export class FilterByIngredient extends SearchTemplate {
-	search(query) {
-		const filteredRecipes = this.recipes.filter((recipe) =>
+	filterRecipes(query) {
+		const result = this.recipes.filter((recipe) =>
 			recipe.ingredients.some(
 				(ingredient) =>
 					ingredient.ingredient.toLowerCase() === query.toLowerCase()
 			)
 		);
-		this.displayRecipes(filteredRecipes);
-		return filteredRecipes;
+		return result;
 	}
 }
 
+//recherche par appareil
 export class FilterByAppliance extends SearchTemplate {
-	search(query) {
-		const filteredRecipes = this.recipes.filter(
+	constructor(recipes) {
+		super(recipes);
+	}
+	filterRecipes(query) {
+		const result = this.recipes.filter(
 			(recipe) => recipe.appliance.toLowerCase() === query.toLowerCase()
 		);
-		this.displayRecipes(filteredRecipes);
-		return filteredRecipes;
+		return result;
 	}
 }
+
+// recherche par ustensil
 export class FilterByUstensil extends SearchTemplate {
-	search(query) {
-		const filteredRecipes = this.recipes.filter((recipe) =>
+	constructor(recipes) {
+		super(recipes);
+	}
+	filterRecipes(query) {
+		const result = this.recipes.filter((recipe) =>
 			recipe.ustensils.some(
 				(ustensil) => ustensil.toLowerCase() === query.toLowerCase()
 			)
 		);
-		this.displayRecipes(filteredRecipes);
-		return filteredRecipes;
+		return result;
 	}
 }
