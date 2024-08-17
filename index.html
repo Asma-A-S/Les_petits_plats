@@ -24,6 +24,7 @@
             type="search"
             placeholder="Rechercher une recette, un ingrédient..."
             class="search-input"
+            id="searchByName"
           >
           <!--<img src="assets/loop.png" alt="loupe de recheche" class="search-icon">-->
         </form>
@@ -43,7 +44,7 @@
             </button>
             <div class="dropdown-content" id="dropdownIngredients">
               <input type="search" placeholder="" id="inputIngredient">
-              <ul id="listIngredients"></ul>
+              <ul id="ingredient-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
@@ -55,7 +56,7 @@
             </button>
             <div class="dropdown-content" id="dropdownAppareils">
               <input type="search" placeholder="" id="inputAppliance">
-              <ul id="listAppliances"></ul>
+              <ul id="appliance-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
@@ -67,7 +68,7 @@
             </button>
             <div class="dropdown-content" id="dropdownUstensils">
               <input type="search" placeholder="" id="inputUstensil">
-              <ul id="listUstensils"></ul>
+              <ul id="ustensil-dropdown"></ul>
             </div>
           </div>
         </div>
@@ -83,6 +84,7 @@
     </main>
 
     <!--script-->
+    <script type="module" src="/scripts/filters/filterFunctions.js"></script>
     <script type="module" src="index.js"></script>
   </body>
 </html>
