@@ -17,7 +17,7 @@ function init() {
 	updateFiltredDropdowns(filteredRecipes);
 
 	//initialise les évènements de recherche
-	searchByNameInput(searchController);
+	searchByNameInput();
 	searchByTag();
 }
 
