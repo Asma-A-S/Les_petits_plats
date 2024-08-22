@@ -10,7 +10,9 @@ export class SearchController {
 		this.originalRecipes = recipes;
 		this.filteredRecipes = [...this.originalRecipes];
 	}
-
+	resetFilters() {
+		this.filteredRecipes = [...this.originalRecipes];
+	}
 	// methode pour la recherche avancée
 	search(query, type = "name") {
 		switch (type) {
