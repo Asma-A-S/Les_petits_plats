@@ -2,14 +2,12 @@
 export function initSearchByTag(tagInputs, searchByTag) {
 	tagInputs.forEach((tagInput) => {
 		tagInput.addEventListener("click", (e) => {
+			console.log(e.target, "e.target");
+			console.log(tagInput, "taginput");
 			const type = e.target.dataset.type;
 			const query = e.target.textContent.trim().toLowerCase();
 			if (query && type) {
 				searchByTag(query, type);
-
-				//refermer le dropdown après séléction du tag
-				const dropdown = tagInput.closest(".dropdown-content");
-				dropdown.classList.remove("show");
 			}
 		});
 	});
@@ -33,24 +31,38 @@ export function openCloseDropdown(tagButtons) {
 	tagButtons.forEach((button) => {
 		button.addEventListener("click", (e) => {
 			e.preventDefault();
+
+			// Fermer tous les autres dropdowns avant d'en ouvrir un nouveau
+			document
+				.querySelectorAll(".dropdown-content.show")
+				.forEach((dropdown) => {
+					if (dropdown !== button.nextElementSibling) {
+						dropdown.classList.remove("show");
+						dropdown.previousElementSibling
+							.querySelector(".vector-up")
+							.classList.remove("rotate-180");
+					}
+				});
+
 			const dropdownContent = button.nextElementSibling;
 			dropdownContent.style.zIndex = "1";
 			//toggle la visiblité de dropdown actuel
 			dropdownContent.classList.toggle("show");
 
-			//cacher les autres dropdown
-
-			document.querySelectorAll(".dropdown-content").forEach((content) => {
-				if (content !== dropdownContent) {
-					content.classList.remove("show");
-				}
-			});
+			// retourner la flèche de la liste déroulante
+			const vectorIcon = button.querySelector(".vector-up");
+			//retourner la flèche de la liste si la liste est ouverte
+			if (dropdownContent.classList.contains("show")) {
+				vectorIcon.classList.add("rotate-180");
+			} else {
+				vectorIcon.classList.remove("rotate-180");
+			}
 		});
 	});
 }
 
 //gérer les inputs pour la recherche par tag
-export function setupSearchFilter(inputId, listId) {
+export function searchByInputTag(inputId, listId) {
 	const searchInput = document.getElementById(inputId);
 	searchInput.addEventListener("input", () => {
 		const searchTerm = searchInput.value.trim().toLowerCase();
@@ -61,13 +73,32 @@ export function setupSearchFilter(inputId, listId) {
 		});
 	});
 }
-//fermer les dropdown si l'utilisateur clique en dehors des
+
 export function resetDropdowns() {
 	document.addEventListener("click", (e) => {
-		if (!e.target.closest(".tag-select")) {
-			document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
-				dropdown.classList.remove("show");
-			});
+		// Vérifie si le clic n'est pas dans un bouton de sélection ou un menu déroulant
+		if (
+			!e.target.closest(".tag-select") &&
+			!e.target.closest(".dropdown-content")
+		) {
+			// Ferme tous les dropdowns ouverts
+			document
+				.querySelectorAll(".dropdown-content.show")
+				.forEach((dropdown) => {
+					// Trouve le bouton associé pour fermer la flèche
+					const button = dropdown.previousElementSibling;
+					if (button && button.classList.contains("tag-select")) {
+						const vectorIcon = button.querySelector(".vector-up");
+						if (vectorIcon) {
+							vectorIcon.classList.remove("rotate-180");
+						}
+					}
+
+					// Ferme le dropdown
+					dropdown.classList.remove("show");
+				});
 		}
 	});
 }
+
+resetDropdowns();

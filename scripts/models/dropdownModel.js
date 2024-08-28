@@ -20,9 +20,9 @@ export class DropdownData {
 			);
 		});
 
-		this.ingredients = Array.from(ingredientsSet);
-		this.appliances = Array.from(appliancesSet);
-		this.ustensils = Array.from(ustensilsSet);
+		this.ingredients = Array.from(ingredientsSet).sort();
+		this.appliances = Array.from(appliancesSet).sort();
+		this.ustensils = Array.from(ustensilsSet).sort();
 	}
 	// retourner les listes ingredients, ustensils, appliance
 	returnedDropdownLists() {

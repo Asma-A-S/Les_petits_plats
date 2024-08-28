@@ -14,6 +14,11 @@ export function displayRecipes(recipes) {
 
 //mettre à jour le nombre de recettes affichées
 export function updateRecipeCount(count) {
+	if (count === 0) {
+		const noResult = document.getElementById("noResultsMessage");
+		noResult.style.display = "flex";
+	}
+	count = count.toString().padStart(2, "0");
 	const recipeCountElement = document.getElementById("recipeCount");
 	recipeCountElement.textContent = `${count} recettes`;
 }
@@ -38,6 +43,7 @@ export function updateFiltredDropdowns(recipes) {
 	const dropdownData = new DropdownData(); //instance
 	dropdownData.setTagsLists(recipes);
 	const updatedDropdownLists = dropdownData.returnedDropdownLists();
+	console.log(updatedDropdownLists, "updated");
 	getIngredientUstensilApplianceLists(updatedDropdownLists);
 }
 
@@ -49,7 +55,7 @@ export function displayDropdownLists(dropdownId, items, type) {
 
 		items.forEach((item) => {
 			const li = document.createElement("li");
-			li.classList.add("dropdown-item", "tag-input");
+			li.classList.add("dropdown-item", "tag-element");
 			li.textContent = item;
 			li.setAttribute("data-type", type);
 			dropdown.appendChild(li);

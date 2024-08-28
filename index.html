@@ -25,8 +25,11 @@
             placeholder="Rechercher une recette, un ingrédient..."
             class="search-input"
             id="searchByName"
+            autocomplete="off"
           >
-          <!--<img src="assets/loop.png" alt="loupe de recheche" class="search-icon">-->
+          <img src="assets/loop.png" alt="loupe de recheche" class="search-icon">
+          <img src="assets/vector-close.png" alt="supprimer le mot saisi" class="search-close">
+          
         </form>
       </div>
     </header>
@@ -38,36 +41,39 @@
           <div class="tag">
             <button type="button" class="tag-select" id="btnIngredients">Ingrédients
               <img 
-                src="assets/vectorDown.png" 
-                class="vector-up"
+                src="assets/vector.png" 
+                class="vector vector-up"
                 alt="flèche déroulante">
             </button>
             <div class="dropdown-content" id="dropdownIngredients">
-              <input type="search" placeholder="" id="inputIngredient">
+              <input 
+                type="search"   
+                id="inputIngredient"
+                autocomplete="off">
               <ul id="ingredient-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
             <button type="button" class="tag-select">Appareils
               <img 
-                src="assets/vectorDown.png" 
+                src="assets/vector.png" 
                 class="vector vector-up"
                 alt="flèche déroulante">
             </button>
             <div class="dropdown-content" id="dropdownAppareils">
-              <input type="search" placeholder="" id="inputAppliance">
+              <input type="search" id="inputAppliance" autocomplete="off">
               <ul id="appliance-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
             <button type="button" class="tag-select">Ustensiles
               <img 
-                src="assets/vectorDown.png" 
-                class="vector-up"
+                src="assets/vector.png" 
+                class="vector vector-up"
                 alt="flèche déroulante">
             </button>
             <div class="dropdown-content" id="dropdownUstensils">
-              <input type="search" placeholder="" id="inputUstensil">
+              <input type="search" id="inputUstensil" autocomplete="off">
               <ul id="ustensil-dropdown"></ul>
             </div>
           </div>
@@ -79,8 +85,10 @@
       </section>
       <span id="recipeCount">1500 recettes</span>
     </div>
-      <div class="container-card"></div>
-      <div id="noResultsMessage" style="display: none;">Aucun résultat trouvé</div>
+    <div class="container-card"></div>
+    <div id="noResultsMessage" style="display: none;">
+      <p>Aucun résultat trouvé</p>
+    </div>
     </main>
 
     <!--script-->

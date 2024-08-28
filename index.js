@@ -10,12 +10,11 @@ import {
 	initSearchByTag,
 	openCloseDropdown,
 	closeTag,
-	setupSearchFilter,
+	searchByInputTag,
 } from "./scripts/utils/eventHandlers.js";
 
 import { SearchController } from "./scripts/controllers/searchController.js";
 const searchController = new SearchController(recipes);
-
 let selectedItemTags = [];
 
 function init() {
@@ -23,29 +22,66 @@ function init() {
 	displayRecipes(filteredRecipes);
 	updateRecipeCount(filteredRecipes.length);
 	updateFiltredDropdowns(filteredRecipes);
-	initSearchByNameInput();
-	setupSearchFilters();
-	const tagInputs = document.querySelectorAll(".tag-input");
-	initSearchByTag(tagInputs, searchByTag);
 
-	const tagButtons = document.querySelectorAll(".tag-select");
-	openCloseDropdown(tagButtons);
+	//initialiser les fonctionnalités avancées
+	advancedSearch();
+	initSearchByNameInput();
+	searchByInputTags();
+	handleDropdown();
 
 	const tagContainer = document.getElementById("selectedTags");
 	closeTag(tagContainer, removeTag);
 }
+
+// Réinitialiser les événements sur les nouveaux éléments dropdowns
+function advancedSearch() {
+	const tagInputs = document.querySelectorAll(".tag-element");
+	initSearchByTag(tagInputs, searchByTag);
+}
+
+//gestion des dropdowns
+function handleDropdown() {
+	const tagButtons = document.querySelectorAll(".tag-select");
+	openCloseDropdown(tagButtons);
+}
+
 // Déclencher la recherche par saisie input
 function initSearchByNameInput() {
 	const searchInput = document.getElementById("searchByName");
+	const close = document.querySelector(".search-close");
+
 	searchInput.addEventListener("keyup", (e) => {
 		const query = e.target.value.trim().toLowerCase();
 		if (query.length >= 3) {
 			searchController.resetFilters();
 			const filteredRecipes = searchController.search(query, "name");
+			applyAllTagsFilters();
 			displayRecipes(filteredRecipes);
 			updateRecipeCount(filteredRecipes.length);
+			updateFiltredDropdowns(filteredRecipes);
+			advancedSearch();
+			close.style.display = "block"; //afficher la croix
+		} else if (query.length === 0) {
+			resetSearch();
 		}
 	});
+
+	close.addEventListener("click", (e) => {
+		searchInput.value = ""; //vider l'input
+		close.style.display = "none"; //masquer la croix
+		displayRecipes(recipes);
+		updateRecipeCount(recipes.length);
+	});
+}
+
+// réinitialiser l'affichage des recettes à l'état initial
+function resetSearch() {
+	searchController.resetFilters();
+	const filteredRecipes = searchController.filteredRecipes;
+	displayRecipes(filteredRecipes);
+	updateRecipeCount(filteredRecipes.length);
+	applyAllTagsFilters();
+	updateFiltredDropdowns(searchController.filteredRecipes);
 }
 function searchByTag(query, type) {
 	// Vérifier si le tag n'est pas déjà sélectionné
@@ -55,6 +91,8 @@ function searchByTag(query, type) {
 		selectedItemTags.push({ item: query, type: type });
 		addTag(query, type);
 		applyAllTagsFilters();
+
+		advancedSearch();
 	}
 }
 // ajouter les tags sélectionnées
@@ -76,28 +114,33 @@ function removeTag(query, type) {
 		(tag) => !(tag.item === query && tag.type === type)
 	);
 	applyAllTagsFilters();
+	advancedSearch();
 }
 
-function applyAllTagsFilters() {
-	// Réinitialiser les recettes filtrées
-	searchController.resetFilters();
+//appliquer tout les filtres de tags
+function applyAllTagsFilters(filteredRecipes) {
+	// Réinitialiser les recettes filtrées si aucune recette n'est passée en paramètre
+	if (!filteredRecipes) {
+		searchController.resetFilters();
+		filteredRecipes = searchController.filteredRecipes;
+	}
 
 	// Appliquer les filtres pour chaque tag sélectionné
 	selectedItemTags.forEach(({ item, type }) => {
-		searchController.search(item, type);
+		filteredRecipes = searchController.search(item, type);
 	});
 
 	// Afficher les résultats filtrés
-	const filteredRecipes = searchController.filteredRecipes;
 	displayRecipes(filteredRecipes);
 	updateRecipeCount(filteredRecipes.length);
+	updateFiltredDropdowns(filteredRecipes);
 }
 
 //initier la recherche par input dans les tags
-function setupSearchFilters() {
-	setupSearchFilter("inputIngredient", "#ingredient-dropdown");
-	setupSearchFilter("inputAppliance", "#appliance-dropdown");
-	setupSearchFilter("inputUstensil", "#ustensil-dropdown");
+function searchByInputTags() {
+	searchByInputTag("inputIngredient", "#ingredient-dropdown");
+	searchByInputTag("inputAppliance", "#appliance-dropdown");
+	searchByInputTag("inputUstensil", "#ustensil-dropdown");
 }
 
 init();
