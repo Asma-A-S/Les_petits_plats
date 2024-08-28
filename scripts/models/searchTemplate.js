@@ -10,14 +10,29 @@ export class SearchTemplate {
 // recherche principale
 export class FilterByName extends SearchTemplate {
 	filterRecipes(query) {
-		const result = this.recipes.filter(
-			(recipe) =>
-				recipe.name.toLowerCase().includes(query.toLowerCase()) ||
-				recipe.description.toLowerCase().includes(query.toLowerCase()) ||
-				recipe.ingredients.some((ingredient) =>
-					ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
-				)
-		);
+		const lowerQuery = query.toLowerCase();
+		const result = [];
+
+		for (let i = 0; i < this.recipes.length; i++) {
+			const recipe = this.recipes[i];
+			const recipeName = recipe.name.toLowerCase();
+			const recipeDescription = recipe.description.toLowerCase();
+			if (
+				recipeName.includes(lowerQuery) ||
+				recipeDescription.includes(lowerQuery)
+			) {
+				result.push(recipe);
+				continue;
+			}
+
+			for (let j = 0; j < recipe.ingredients.length; j++) {
+				const ingredient = recipe.ingredients[j].ingredient.toLowerCase();
+				if (ingredient.includes(lowerQuery)) {
+					result.push(recipe);
+					break;
+				}
+			}
+		}
 		return result;
 	}
 }
@@ -25,12 +40,19 @@ export class FilterByName extends SearchTemplate {
 //recherche par ingrédient
 export class FilterByIngredient extends SearchTemplate {
 	filterRecipes(query) {
-		const result = this.recipes.filter((recipe) =>
-			recipe.ingredients.some(
-				(ingredient) =>
-					ingredient.ingredient.toLowerCase() === query.toLowerCase()
-			)
-		);
+		const lowerCaseQuery = query.toLowerCase();
+		const result = [];
+
+		for (let i = 0; i < this.recipes.length; i++) {
+			const recipe = this.recipes[i];
+			for (let j = 0; j < recipe.ingredients.length; j++) {
+				const ingredient = recipe.ingredients[j].ingredient.toLowerCase();
+				if (ingredient === lowerCaseQuery) {
+					result.push(recipe);
+					break; // Sortir de la boucle dès qu'un ingrédient correspond
+				}
+			}
+		}
 		return result;
 	}
 }
@@ -41,9 +63,15 @@ export class FilterByAppliance extends SearchTemplate {
 		super(recipes);
 	}
 	filterRecipes(query) {
-		const result = this.recipes.filter(
-			(recipe) => recipe.appliance.toLowerCase() === query.toLowerCase()
-		);
+		const lowerCaseQuery = query.toLowerCase();
+		const result = [];
+
+		for (let i = 0; i < this.recipes.length; i++) {
+			const recipe = this.recipes[i];
+			if (recipe.appliance.toLowerCase() === lowerCaseQuery) {
+				result.push(recipe);
+			}
+		}
 		return result;
 	}
 }
@@ -54,11 +82,19 @@ export class FilterByUstensil extends SearchTemplate {
 		super(recipes);
 	}
 	filterRecipes(query) {
-		const result = this.recipes.filter((recipe) =>
-			recipe.ustensils.some(
-				(ustensil) => ustensil.toLowerCase() === query.toLowerCase()
-			)
-		);
+		const lowerCaseQuery = query.toLowerCase();
+		const result = [];
+
+		for (let i = 0; i < this.recipes.length; i++) {
+			const recipe = this.recipes[i];
+			for (let j = 0; j < recipe.ustensils.length; j++) {
+				const ustensil = recipe.ustensils[j].toLowerCase();
+				if (ustensil === lowerCaseQuery) {
+					result.push(recipe);
+					break; // Sortir de la boucle dès qu'un ustensil correspond
+				}
+			}
+		}
 		return result;
 	}
 }
