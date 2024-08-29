@@ -9,6 +9,9 @@ export class SearchTemplate {
 }
 // recherche principale
 export class FilterByName extends SearchTemplate {
+	constructor(recipes) {
+		super(recipes);
+	}
 	filterRecipes(query) {
 		const lowerQuery = query.toLowerCase();
 		const result = [];
@@ -39,6 +42,9 @@ export class FilterByName extends SearchTemplate {
 
 //recherche par ingrédient
 export class FilterByIngredient extends SearchTemplate {
+	constructor(recipes) {
+		super(recipes);
+	}
 	filterRecipes(query) {
 		const lowerCaseQuery = query.toLowerCase();
 		const result = [];
