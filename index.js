@@ -16,9 +16,9 @@ import {
 import { SearchController } from "./scripts/controllers/searchController.js";
 const searchController = new SearchController(recipes);
 let selectedItemTags = [];
+let filteredRecipes = [...recipes];
 
 function init() {
-	const filteredRecipes = [...recipes];
 	displayRecipes(filteredRecipes);
 	updateRecipeCount(filteredRecipes.length);
 	updateFiltredDropdowns(filteredRecipes);
@@ -28,11 +28,13 @@ function init() {
 	initSearchByNameInput();
 	searchByInputTags();
 	handleDropdown();
-
+	handleTags();
+}
+// gestion des des tags
+function handleTags() {
 	const tagContainer = document.getElementById("selectedTags");
 	closeTag(tagContainer, removeTag);
 }
-
 // Réinitialiser les événements sur les nouveaux éléments dropdowns
 function advancedSearch() {
 	const tagInputs = document.querySelectorAll(".tag-element");
@@ -54,15 +56,15 @@ function initSearchByNameInput() {
 		const query = e.target.value.trim().toLowerCase();
 		if (query.length >= 3) {
 			searchController.resetFilters();
-			const filteredRecipes = searchController.search(query, "name");
-			applyAllTagsFilters();
-			displayRecipes(filteredRecipes);
-			updateRecipeCount(filteredRecipes.length);
-			updateFiltredDropdowns(filteredRecipes);
-			advancedSearch();
+			filteredRecipes = searchController.search(query, "name");
+			applyAllTagsFilters(filteredRecipes);
+			advancedSearch(filteredRecipes);
+
 			close.style.display = "block"; //afficher la croix
 		} else if (query.length === 0) {
 			resetSearch();
+			displayRecipes(recipes);
+			updateRecipeCount(recipes.length);
 		}
 	});
 
@@ -78,10 +80,7 @@ function initSearchByNameInput() {
 function resetSearch() {
 	searchController.resetFilters();
 	const filteredRecipes = searchController.filteredRecipes;
-	displayRecipes(filteredRecipes);
-	updateRecipeCount(filteredRecipes.length);
-	applyAllTagsFilters();
-	updateFiltredDropdowns(searchController.filteredRecipes);
+	applyAllTagsFilters(filteredRecipes);
 }
 function searchByTag(query, type) {
 	// Vérifier si le tag n'est pas déjà sélectionné
@@ -90,8 +89,7 @@ function searchByTag(query, type) {
 	) {
 		selectedItemTags.push({ item: query, type: type });
 		addTag(query, type);
-		applyAllTagsFilters();
-
+		applyAllTagsFilters(filteredRecipes);
 		advancedSearch();
 	}
 }
@@ -113,7 +111,8 @@ function removeTag(query, type) {
 	selectedItemTags = selectedItemTags.filter(
 		(tag) => !(tag.item === query && tag.type === type)
 	);
-	applyAllTagsFilters();
+	resetSearch(filteredRecipes);
+	applyAllTagsFilters(filteredRecipes);
 	advancedSearch();
 }
 
