@@ -2,8 +2,6 @@
 export function initSearchByTag(tagInputs, searchByTag) {
 	tagInputs.forEach((tagInput) => {
 		tagInput.addEventListener("click", (e) => {
-			console.log(e.target, "e.target");
-			console.log(tagInput, "taginput");
 			const type = e.target.dataset.type;
 			const query = e.target.textContent.trim().toLowerCase();
 			if (query && type) {

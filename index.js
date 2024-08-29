@@ -47,6 +47,12 @@ function handleDropdown() {
 	openCloseDropdown(tagButtons);
 }
 
+// réinitialiser l'affichage des recettes à l'état initial
+function resetSearch() {
+	searchController.resetFilters();
+	const filteredRecipes = searchController.filteredRecipes;
+	applyAllTagsFilters(filteredRecipes);
+}
 // Déclencher la recherche par saisie input
 function initSearchByNameInput() {
 	const searchInput = document.getElementById("searchByName");
@@ -55,33 +61,24 @@ function initSearchByNameInput() {
 	searchInput.addEventListener("keyup", (e) => {
 		const query = e.target.value.trim().toLowerCase();
 		if (query.length >= 3) {
-			searchController.resetFilters();
-			filteredRecipes = searchController.search(query, "name");
+			filteredRecipes = searchController.searchByName(query, "name");
 			applyAllTagsFilters(filteredRecipes);
-			advancedSearch(filteredRecipes);
-
+			advancedSearch();
 			close.style.display = "block"; //afficher la croix
 		} else if (query.length === 0) {
 			resetSearch();
-			displayRecipes(recipes);
-			updateRecipeCount(recipes.length);
 		}
 	});
 
 	close.addEventListener("click", (e) => {
 		searchInput.value = ""; //vider l'input
 		close.style.display = "none"; //masquer la croix
-		displayRecipes(recipes);
-		updateRecipeCount(recipes.length);
+		filteredRecipes = recipes;
+		resetSearch();
+		advancedSearch();
 	});
 }
 
-// réinitialiser l'affichage des recettes à l'état initial
-function resetSearch() {
-	searchController.resetFilters();
-	const filteredRecipes = searchController.filteredRecipes;
-	applyAllTagsFilters(filteredRecipes);
-}
 function searchByTag(query, type) {
 	// Vérifier si le tag n'est pas déjà sélectionné
 	if (
@@ -89,6 +86,7 @@ function searchByTag(query, type) {
 	) {
 		selectedItemTags.push({ item: query, type: type });
 		addTag(query, type);
+
 		applyAllTagsFilters(filteredRecipes);
 		advancedSearch();
 	}
@@ -111,7 +109,7 @@ function removeTag(query, type) {
 	selectedItemTags = selectedItemTags.filter(
 		(tag) => !(tag.item === query && tag.type === type)
 	);
-	resetSearch(filteredRecipes);
+	resetSearch();
 	applyAllTagsFilters(filteredRecipes);
 	advancedSearch();
 }
@@ -126,7 +124,7 @@ function applyAllTagsFilters(filteredRecipes) {
 
 	// Appliquer les filtres pour chaque tag sélectionné
 	selectedItemTags.forEach(({ item, type }) => {
-		filteredRecipes = searchController.search(item, type);
+		filteredRecipes = searchController.searchByTag(item, type);
 	});
 
 	// Afficher les résultats filtrés

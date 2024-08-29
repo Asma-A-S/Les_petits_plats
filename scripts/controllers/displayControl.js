@@ -43,7 +43,6 @@ export function updateFiltredDropdowns(recipes) {
 	const dropdownData = new DropdownData(); //instance
 	dropdownData.setTagsLists(recipes);
 	const updatedDropdownLists = dropdownData.returnedDropdownLists();
-	console.log(updatedDropdownLists, "updated");
 	getIngredientUstensilApplianceLists(updatedDropdownLists);
 }
 
