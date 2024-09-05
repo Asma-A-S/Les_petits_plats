@@ -1,6 +1,6 @@
 export function createRecipeCardDom(recipe) {
 	const article = document.createElement("article");
-	article.classList.add("recipe-card");
+	article.classList.add("recipe-card", "flex");
 
 	// Time span
 	const timeSpan = document.createElement("span");

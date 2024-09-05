@@ -30,6 +30,7 @@ function init() {
 	handleDropdown();
 	handleTags();
 }
+
 // gestion des des tags
 function handleTags() {
 	const tagContainer = document.getElementById("selectedTags");
@@ -95,7 +96,7 @@ function searchByTag(query, type) {
 function addTag(query, type) {
 	const tagContainer = document.getElementById("selectedTags");
 	const tagItem = document.createElement("div");
-	tagItem.className = "tag-item";
+	tagItem.className = "tag-item flex";
 	tagItem.innerHTML = `
 		<span>${query}</span>
 		<button class="remove-tag" data-item="${query}" data-type="${type}">
@@ -132,7 +133,6 @@ function applyAllTagsFilters(filteredRecipes) {
 	updateRecipeCount(filteredRecipes.length);
 	updateFiltredDropdowns(filteredRecipes);
 }
-
 //initier la recherche par input dans les tags
 function searchByInputTags() {
 	searchByInputTag("inputIngredient", "#ingredient-dropdown");

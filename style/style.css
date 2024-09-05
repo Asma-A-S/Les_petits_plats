@@ -1,10 +1,13 @@
 body {
   max-width: 1440px !important;
   margin: 0 auto;
-  font-family: Anton;
+  font-family: 'Anton';
 }
 main {
   background-color: #C6C6C6;
+}
+.flex {
+  display: flex;
 }
 .banner {
   background-image: url(/assets/header_background.png);
@@ -12,7 +15,6 @@ main {
   height: 667px;
   object-fit: cover;
   position: relative;
-  display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -25,11 +27,7 @@ main {
   left: 60px;
 }
 .header-block {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  top: 50%;
+  position: relative;
 }
 .header-block h1 {
   color:#FFD15B;
@@ -39,14 +37,14 @@ main {
 }
 .search-form {
   position: relative;
-  width: 954px; 
+  width: clamp(300px, 50vw, 954px);
+  margin: 0 auto;
   height: 72px; 
 }
 .search-input {
   width: 100%; 
   height: 100%;
   border-radius: 10px;
-  padding-left: 40px; 
 }
 
 .search-icon, .search-close {
@@ -54,15 +52,6 @@ main {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  /*position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto; 
-  width: 50px; 
-  margin-right: 10px;
-  height: auto;
-  cursor: pointer; */
 }
 .search-icon {
   right: 10px;
@@ -70,10 +59,12 @@ main {
 .search-close {
   right: 80px;
 }
+input{
+  padding-left: 20px; 
+}
 /*style card*/
 .container-card{
   width: 90%;
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -85,7 +76,6 @@ main {
   border-radius: 20px;
   width: 380px;
   height: 731px;
-  display: flex;
   flex-direction: column;
   background-color: white;
   position: relative;
@@ -95,7 +85,8 @@ main {
   width: 100%;
   height: 253px;
   object-fit: cover;
-  overflow-clip-margin: unset;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
 }
 .recipe-card-time{
   position: absolute;
@@ -165,7 +156,6 @@ main {
 }
 
 .head{
-  display: flex;
   justify-content: space-between;
   align-items: center;
   width: 90%;
@@ -174,7 +164,6 @@ main {
 .tags-filtres{
   padding-top: 30px;
   width: 90%;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -183,15 +172,14 @@ main {
 }
 .tags-container{
   width: 55%;
-  display: flex;
   justify-content: space-between;
 }
 
 .tag{
+  display: flex;
   position: relative;
   width: 195px;
   height: 60px;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -205,10 +193,9 @@ main {
   height: 59px;
   border: none;
   background-color: white;
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Monrope', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 16px;
   font-weight: 500;
   padding: 0;
@@ -229,13 +216,12 @@ main {
 }
 .dropdown-content input[type="search"] {
   height: 36px;
-  width: 80%;
+  width: 90%;
   padding: 8px 30px 8px 8px;
-  margin-top: 5px;
+  margin: 0 auto;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-image: url('assets/loopTags.svg');
   background-size:13.5px 14px;
   background-repeat: no-repeat;
   background-position: right 8px center; 
@@ -247,6 +233,23 @@ input:focus {
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
+}
+.input-wrapper {
+  position: relative; /* Position relative pour que les icônes soient positionnées en fonction de cet élément */
+  display: flex;
+  align-items: center;
+  width: 100%; /* Ajuste la largeur selon vos besoins */
+}
+.input-icon, .input-close{
+  position: absolute;
+}
+.input-icon {
+  right: 15px;
+  
+}
+.input-close {
+  right: 35px;
+  display: none;
 }
 .dropdown-content ul{
   width: 100%;
@@ -266,7 +269,6 @@ input[type="search"]::-webkit-search-cancel-button {
 .dropdown-content li{
   padding-left: 20px;
   height: 30px;
-  display: flex;
   align-items: center;
 }
 .dropdown-content li:hover{
@@ -274,7 +276,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 /*selected tags*/
 .selected-tags {
-  display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
@@ -287,7 +288,6 @@ input[type="search"]::-webkit-search-cancel-button {
   width: 141px;
   height: 53px;
   padding: 5px 10px;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
@@ -318,14 +318,12 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 #noResultsMessage {
-  display: flex;
   align-items: center;
   justify-content: center;
   height: 50vh;
   background-color: #C6C6C6;
 }
 #noResultsMessage p {
-  display: flex;
   justify-content: center;  /* Centre le texte horizontalement */
   align-items: center;  
   width: 50%;

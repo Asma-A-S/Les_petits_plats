@@ -54,7 +54,7 @@ export function displayDropdownLists(dropdownId, items, type) {
 
 		items.forEach((item) => {
 			const li = document.createElement("li");
-			li.classList.add("dropdown-item", "tag-element");
+			li.classList.add("dropdown-item", "tag-element", "flex");
 			li.textContent = item;
 			li.setAttribute("data-type", type);
 			dropdown.appendChild(li);
