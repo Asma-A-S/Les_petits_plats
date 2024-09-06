@@ -12,6 +12,7 @@ import {
 	closeTag,
 	searchByInputTag,
 } from "./scripts/utils/eventHandlers.js";
+import { escapeHTML } from "./scripts/utils/escapeHtml.js";
 
 import { SearchController } from "./scripts/controllers/searchController.js";
 const searchController = new SearchController(recipes);
@@ -60,14 +61,16 @@ function initSearchByNameInput() {
 	const close = document.querySelector(".search-close");
 
 	searchInput.addEventListener("keyup", (e) => {
-		const query = e.target.value.trim().toLowerCase();
+		let query = e.target.value.trim().toLowerCase();
+		query = escapeHTML(query);
 		if (query.length >= 3) {
 			filteredRecipes = searchController.searchByName(query, "name");
 			applyAllTagsFilters(filteredRecipes);
 			advancedSearch();
-			close.style.display = "block"; //afficher la croix
 		} else if (query.length === 0) {
 			resetSearch();
+		} else if (query.length > 0) {
+			close.style.display = "block"; //afficher la croix
 		}
 	});
 
