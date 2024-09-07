@@ -103,7 +103,7 @@ function addTag(query, type) {
 	tagItem.innerHTML = `
 		<span>${query}</span>
 		<button class="remove-tag" data-item="${query}" data-type="${type}">
-			<img src="/assets/vectorClose.png" alt="Remove Tag">
+			<img src="assets/vectorClose.png" alt="Remove Tag">
 		</button>`;
 	tagContainer.appendChild(tagItem);
 }
