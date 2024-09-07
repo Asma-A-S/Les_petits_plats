@@ -10,16 +10,6 @@ export class DropdownData {
 		const appliancesSet = new Set();
 		const ustensilsSet = new Set();
 
-		recipes.forEach((recipe) => {
-			recipe.ingredients.forEach((ingredient) =>
-				ingredientsSet.add(ingredient.ingredient.toLowerCase())
-			);
-			appliancesSet.add(recipe.appliance.toLowerCase());
-			recipe.ustensils.forEach((ustensil) =>
-				ustensilsSet.add(ustensil.toLowerCase())
-			);
-		});
-		/*
 		for (let i = 0; i < recipes.length; i++) {
 			const recipe = recipes[i];
 
@@ -28,15 +18,13 @@ export class DropdownData {
 				ingredientsSet.add(ingredient);
 			}
 
-			
 			appliancesSet.add(recipe.appliance.toLowerCase());
 
-			
 			for (let k = 0; k < recipe.ustensils.length; k++) {
 				const ustensil = recipe.ustensils[k].toLowerCase();
 				ustensilsSet.add(ustensil);
 			}
-		} */
+		}
 
 		this.ingredients = Array.from(ingredientsSet).sort();
 		this.appliances = Array.from(appliancesSet).sort();
