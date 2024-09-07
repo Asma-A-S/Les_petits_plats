@@ -10,7 +10,7 @@ main {
   display: flex;
 }
 .banner {
-  background-image: url(/assets/header_background.png);
+  background-image: url(../assets/header_background.png);
   width : 100%;
   height: 667px;
   object-fit: cover;
