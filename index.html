@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <link href="/style/style.css" rel="stylesheet" type="text/css">
+    <link href="style/style.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="assets/favicon.svg">
     <title>Les petits plats</title>
   </head>
   <body>
-    <header class="banner">
+    <header class="banner flex">
       <img
         src="assets/logo.png" 
         alt="logo des petit plats"
@@ -28,71 +28,83 @@
             autocomplete="off"
           >
           <img src="assets/loop.png" alt="loupe de recheche" class="search-icon">
-          <img src="assets/vector-close.png" alt="supprimer le mot saisi" class="search-close">
+          <img src="assets/vector-close.png" alt="supprimer le mot saisi" class="search-close close">
           
         </form>
       </div>
     </header>
     <main>
       <!--tags et filtres-->
-      <div class="head">
-      <section class="tags-filtres">
-        <div class="tags-container">
+      <div class="head flex">
+      <div class="tags-filtres flex">
+        <div class="tags-container flex">
           <div class="tag">
-            <button type="button" class="tag-select" id="btnIngredients">Ingrédients
+            <button type="button" class="tag-select flex" id="btnIngredients">Ingrédients
               <img 
                 src="assets/vector.png" 
                 class="vector vector-up"
                 alt="flèche déroulante">
             </button>
-            <div class="dropdown-content" id="dropdownIngredients">
-              <input 
+            <div class="dropdown-content flex" id="dropdownIngredients">
+              <div class="input-wrapper">
+                <input 
                 type="search"   
                 id="inputIngredient"
                 autocomplete="off">
+                <img src="assets/loopTags.svg" alt="loupe de recheche" class="input-icon">
+                <img src="assets/close.png" alt="supprimer le mot saisi" class="input-close close">
+              </div>
               <ul id="ingredient-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
-            <button type="button" class="tag-select">Appareils
+            <button type="button" class="tag-select flex">Appareils
               <img 
                 src="assets/vector.png" 
                 class="vector vector-up"
                 alt="flèche déroulante">
             </button>
             <div class="dropdown-content" id="dropdownAppareils">
-              <input type="search" id="inputAppliance" autocomplete="off">
-              <ul id="appliance-dropdown"></ul>
+              <div class="input-wrapper">  
+                <input type="search" id="inputAppliance" autocomplete="off">
+                <img src="assets/loopTags.svg" alt="loupe de recheche" class="input-icon">
+                <img src="assets/close.png" alt="supprimer le mot saisi" class="input-close close">
+              </div>
+                <ul id="appliance-dropdown"></ul>
             </div>
           </div>
           <div class="tag">
-            <button type="button" class="tag-select">Ustensiles
+            <button type="button" class="tag-select flex">Ustensiles
               <img 
                 src="assets/vector.png" 
                 class="vector vector-up"
                 alt="flèche déroulante">
             </button>
             <div class="dropdown-content" id="dropdownUstensils">
-              <input type="search" id="inputUstensil" autocomplete="off">
-              <ul id="ustensil-dropdown"></ul>
+              <div class="input-wrapper">
+                <input type="search" id="inputUstensil" autocomplete="off">
+                <img src="assets/loopTags.svg" alt="loupe de recheche" class="input-icon">
+                <img src="assets/close.png" alt="supprimer le mot saisi" class="input-close close">
+              </div>
+                <ul id="ustensil-dropdown"></ul>
             </div>
           </div>
         </div>
-        <div id="selectedTags" class="selected-tags">
+        <div id="selectedTags" class="selected-tags flex">
           <!--les tags sélectionnées seront ajouté ici-->
         </div>
         
-      </section>
+      </div>
       <span id="recipeCount">1500 recettes</span>
     </div>
-    <div class="container-card"></div>
-    <div id="noResultsMessage" style="display: none;">
-      <p>Aucun résultat trouvé</p>
+    <div class="container-card flex"></div>
+    <div id="noResultsMessage" class="flex" style="display: none;">
+      <p class="flex">Aucun résultat trouvé</p>
     </div>
     </main>
 
     <!--script-->
-    <script type="module" src="/scripts/utils/eventHandlers.js"></script>
+    <script type="module" src="scripts/utils/eventHandlers.js"></script>
     <script type="module" src="index.js"></script>
   </body>
 </html>

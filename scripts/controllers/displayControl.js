@@ -43,7 +43,6 @@ export function updateFiltredDropdowns(recipes) {
 	const dropdownData = new DropdownData(); //instance
 	dropdownData.setTagsLists(recipes);
 	const updatedDropdownLists = dropdownData.returnedDropdownLists();
-	console.log(updatedDropdownLists, "updated");
 	getIngredientUstensilApplianceLists(updatedDropdownLists);
 }
 
@@ -55,7 +54,7 @@ export function displayDropdownLists(dropdownId, items, type) {
 
 		items.forEach((item) => {
 			const li = document.createElement("li");
-			li.classList.add("dropdown-item", "tag-element");
+			li.classList.add("dropdown-item", "tag-element", "flex");
 			li.textContent = item;
 			li.setAttribute("data-type", type);
 			dropdown.appendChild(li);

@@ -2,8 +2,6 @@
 export function initSearchByTag(tagInputs, searchByTag) {
 	tagInputs.forEach((tagInput) => {
 		tagInput.addEventListener("click", (e) => {
-			console.log(e.target, "e.target");
-			console.log(tagInput, "taginput");
 			const type = e.target.dataset.type;
 			const query = e.target.textContent.trim().toLowerCase();
 			if (query && type) {
@@ -64,12 +62,47 @@ export function openCloseDropdown(tagButtons) {
 //gérer les inputs pour la recherche par tag
 export function searchByInputTag(inputId, listId) {
 	const searchInput = document.getElementById(inputId);
+	const close = document.querySelector(".input-close");
 	searchInput.addEventListener("input", () => {
-		const searchTerm = searchInput.value.trim().toLowerCase();
+		let searchTerm = searchInput.value.trim().toLowerCase();
 		const listItems = document.querySelectorAll(listId + " li");
+
+		//filtrer les éléments de la liste
 		listItems.forEach((item) => {
 			const text = item.textContent.toLowerCase();
-			item.style.display = text.includes(searchTerm) ? "block" : "none";
+			item.style.display = text.includes(searchTerm) ? "flex" : "none";
+		});
+
+		//afficher ou masque la crois close en fonction de la saisie
+		if (searchTerm.length > 0) {
+			close.style.display = "block";
+		} else {
+			close.style.display = "none";
+		}
+
+		//gestion du clic sur le bouton "close"
+		close.addEventListener("click", () => {
+			searchInput.value = ""; //effacer le champ de saisie
+			close.style.display = "none";
+			//réinitialiser l'affichage des éléments de la liste
+			const listItems = document.querySelectorAll(listId + " li");
+			listItems.forEach((item) => {
+				item.style.display = "block"; // Afficher tous les éléments
+			});
+		});
+	});
+}
+export function handleCloseButton(query, input) {
+	let closeButtons = document.querySelectorAll(".close");
+	closeButtons.forEach((closeButton) => {
+		closeButton.addEventListener("click", () => {
+			console.log(closeButton);
+			if (query.length > 0) {
+				closeButton.style.display = "block";
+			} else {
+				closeButton.style.display = "none";
+				input.value = "";
+			}
 		});
 	});
 }
