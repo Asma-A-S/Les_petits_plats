@@ -4,6 +4,7 @@ import {
 	displayRecipes,
 	updateFiltredDropdowns,
 	updateRecipeCount,
+	message,
 } from "./scripts/controllers/displayControl.js";
 
 import {
@@ -21,7 +22,7 @@ let filteredRecipes = [...recipes];
 
 function init() {
 	displayRecipes(filteredRecipes);
-	updateRecipeCount(filteredRecipes.length);
+	updateRecipeCount(filteredRecipes.length, "");
 	updateFiltredDropdowns(filteredRecipes);
 
 	//initialiser les fonctionnalités avancées
@@ -65,10 +66,14 @@ function initSearchByNameInput() {
 		query = escapeHTML(query);
 		if (query.length >= 3) {
 			filteredRecipes = searchController.searchByName(query, "name");
+			updateRecipeCount(filteredRecipes.length, query);
 			applyAllTagsFilters(filteredRecipes);
+			message(query);
 			advancedSearch();
 		} else if (query.length === 0) {
+			updateRecipeCount(filteredRecipes.length);
 			resetSearch();
+			message(query);
 		} else if (query.length > 0) {
 			close.style.display = "block"; //afficher la croix
 		}
