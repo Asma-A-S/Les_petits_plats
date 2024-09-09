@@ -14,15 +14,21 @@ export function displayRecipes(recipes) {
 
 //mettre à jour le nombre de recettes affichées
 export function updateRecipeCount(count) {
+	const noResult = document.getElementById("noResultsMessage");
 	if (count === 0) {
-		const noResult = document.getElementById("noResultsMessage");
 		noResult.style.display = "flex";
+	} else {
+		noResult.style.display = "none";
 	}
 	count = count.toString().padStart(2, "0");
 	const recipeCountElement = document.getElementById("recipeCount");
 	recipeCountElement.textContent = `${count} recettes`;
 }
-
+//MESSAGE AUCUN RESULTAT avec la valeur saisie
+export function message(input) {
+	const msg = document.querySelector(".message");
+	msg.textContent = `Aucune recette ne contient " ${input} ". Vous pouvez chercher « tarte aux pommes », « poisson »,`;
+}
 //rcéupérer et afficher les  listes ingredients ustensil et appliance
 export function getIngredientUstensilApplianceLists(dropdownData) {
 	displayDropdownLists(
@@ -53,6 +59,7 @@ export function displayDropdownLists(dropdownId, items, type) {
 		dropdown.innerHTML = ""; // Efface les anciens éléments de la liste déroulante
 
 		items.forEach((item) => {
+			item = item.charAt(0).toUpperCase() + item.slice(1);
 			const li = document.createElement("li");
 			li.classList.add("dropdown-item", "tag-element", "flex");
 			li.textContent = item;
